@@ -44,7 +44,8 @@ QAM = qammod(op1.',M,'gray', InputType='bit', UnitAveragePower=true);
 
 %%%%%%%%%%%Моделирование канала связи%%%%%%%%%%%
 %Гауссовский канал
-dB=30;
+for dB = [0 5 10 15 20 25 30]
+    disp(dB)
 awgn=comm.AWGNChannel('NoiseMethod','Signal to noise ratio (SNR)','SNR',dB);
 %awgnchan = comm.AWGNChannel('SNR',dB,'BitsPerSymbol',k);
 QAM_noise = awgn(QAM);
@@ -72,11 +73,14 @@ isequal(decode1,msg)
 
 %Сравнение
 er_count=0;
-Po=0;
 for i = 1:length(msg)
     if (decode1(i)~=msg(i))
         er_count=er_count+1;
     end
 end
-er_count
-Po=er_count/length(msg)*100
+
+Po_b(dB+1)=er_count/length(msg)*100
+end
+dB = [0 5 10 15 20 25 30];
+plot(dB,Po_b(dB+1))
+grid

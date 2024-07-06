@@ -18,19 +18,19 @@ end
 %%%%%%%%%%%Моделирование кодера%%%%%%%%%%%
 n_b=31;
 k_b=26;
-n_c=16;
-k_c=6;
+%n_c=16;
+%k_c=6;
 
 pol = cyclpoly(n_b,k_b);
 parmat = cyclgen(n_b,pol);
 genmat = gen2par(parmat);
-genpoly = cyclpoly(n_c,k_c);
-trellis = poly2trellis(3,[6 7]);
+%genpoly = cyclpoly(n_c,k_c);
+%trellis = poly2trellis(3,[6 7]);
 
 code1=encode(msg,n_b,k_b,'linear/binary',genmat);%Блочный кодер
-code2=encode(msg,n_c,k_c,'cyclic/binary',genpoly);%Циклический кодер
-code3=convenc(msg,trellis);%Свёрточный кодер
-cage=poly2trellis(3,[6 7]);%Решётка для свёрточного кода
+%code2=encode(msg,n_c,k_c,'cyclic/binary',genpoly);%Циклический кодер
+%code3=convenc(msg,trellis);%Свёрточный кодер
+%cage=poly2trellis(3,[6 7]);%Решётка для свёрточного кода
 
 %decode1=decode(code1,n_b,k_b,'linear/binary',genmat);%Блочный декодер
 %decode2=decode(code2,n_c,k_c,'cyclic/binary',genpoly);%Циклический декодер
@@ -48,21 +48,21 @@ for i = 1:length(code1)/(Nrows*Ncols)
     i2=i2+Nrows*Ncols;
 end
 
-i1=1;
-i2=Nrows*Ncols;
-for i = 1:length(code2)/(Nrows*Ncols)
-    op2(i1:i2)=matintrlv(code2(i1:i2),Nrows,Ncols);
-    i1=i1+Nrows*Ncols;
-    i2=i2+Nrows*Ncols;
-end
+%i1=1;
+%i2=Nrows*Ncols;
+%for i = 1:length(code2)/(Nrows*Ncols)
+%    op2(i1:i2)=matintrlv(code2(i1:i2),Nrows,Ncols);
+%    i1=i1+Nrows*Ncols;
+%    i2=i2+Nrows*Ncols;
+%end
 
-i1=1;
-i2=Nrows*Ncols;
-for i = 1:length(code3)/(Nrows*Ncols)
-    op3(i1:i2)=matintrlv(code3(i1:i2),Nrows,Ncols);
-    i1=i1+Nrows*Ncols;
-    i2=i2+Nrows*Ncols;
-end
+%i1=1;
+%i2=Nrows*Ncols;
+%for i = 1:length(code3)/(Nrows*Ncols)
+%    op3(i1:i2)=matintrlv(code3(i1:i2),Nrows,Ncols);
+%    i1=i1+Nrows*Ncols;
+%    i2=i2+Nrows*Ncols;
+%end
 
 
 %%%%%%%%%%%Модуляция QAM32%%%%%%%%%%%
@@ -93,31 +93,31 @@ for i = 1:length(op1)/(Nrows*Ncols)
     i2=i2+Nrows*Ncols;
 end
 
-i1=1;
-i2=Nrows*Ncols;
-for i = 1:length(op2)/(Nrows*Ncols)
-    dop2(i1:i2)=matdeintrlv(op2(i1:i2),Nrows,Ncols);
-    i1=i1+Nrows*Ncols;
-    i2=i2+Nrows*Ncols;
-end
+%i1=1;
+%i2=Nrows*Ncols;
+%for i = 1:length(op2)/(Nrows*Ncols)
+%    dop2(i1:i2)=matdeintrlv(op2(i1:i2),Nrows,Ncols);
+%    i1=i1+Nrows*Ncols;
+%    i2=i2+Nrows*Ncols;
+%end
 
-i1=1;
-i2=Nrows*Ncols;
-for i = 1:length(op3)/(Nrows*Ncols)
-    dop3(i1:i2)=matdeintrlv(op3(i1:i2),Nrows,Ncols);
-    i1=i1+Nrows*Ncols;
-    i2=i2+Nrows*Ncols;
-end
+%i1=1;
+%i2=Nrows*Ncols;
+%for i = 1:length(op3)/(Nrows*Ncols)
+%    dop3(i1:i2)=matdeintrlv(op3(i1:i2),Nrows,Ncols);
+%    i1=i1+Nrows*Ncols;
+%    i2=i2+Nrows*Ncols;
+%end
 
 %%%%%%%%%%%Моделирование декодера%%%%%%%%%%%
 decode1=decode(dop1,n_b,k_b,'linear/binary',genmat);%Блочный декодер
-decode2=decode(dop2,n_c,k_c,'cyclic/binary',genpoly);%Циклический декодер
-tbdepth=5;%A rate 1/2 code has a traceback depth of 5
-decode3=vitdec(dop3,trellis,tbdepth,'trunc','hard');%Свёрточный декодер
+%decode2=decode(dop2,n_c,k_c,'cyclic/binary',genpoly);%Циклический декодер
+%tbdepth=5;%A rate 1/2 code has a traceback depth of 5
+%decode3=vitdec(dop3,trellis,tbdepth,'trunc','hard');%Свёрточный декодер
 
 %Проверка на ошибки
-if (decode1==msg) & (decode2==msg) & (decode3==msg)
-    disp('Ошибок нет')
-else
-    disp('НООООУ')
-end
+%if (decode1==msg) & (decode2==msg) & (decode3==msg)
+%    disp('Ошибок нет')
+%else
+%    disp('НООООУ')
+%end

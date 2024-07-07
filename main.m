@@ -157,4 +157,5 @@ plot(dB,Po_b(dB+1),dB,Po_c(dB+1),dB,Po_s(dB+1))
 title('Pош от ОСШ. КАМ32. Гауссовский канал')
 xlabel('дБ')
 ylabel('Pош')
+legend('Блочный', 'Циклический', 'Свёрточный')
 grid

@@ -154,4 +154,7 @@ Po_s(dB+1)=er_count_s/length(msg)*100;
 end
 dB = [0 5 10 15 20 25 30];
 plot(dB,Po_b(dB+1),dB,Po_c(dB+1),dB,Po_s(dB+1))
+title('Pош от ОСШ. КАМ32. Гауссовский канал')
+xlabel('дБ')
+ylabel('Pош')
 grid
